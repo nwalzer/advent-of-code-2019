@@ -13,22 +13,22 @@ k = 0
 for ele in wire1 :
     if ele[0] == 'R' :
         for col in range(int(ele[1:])):
-            wire1_path[str(i) + ',' + str(j)] = 1
+            wire1_path[str(i) + ',' + str(j)] = k
             k += 1
             j += 1
     elif ele[0] == 'L' :
         for col in range(int(ele[1:])):
-            wire1_path[str(i) + ',' + str(j)] = 1
+            wire1_path[str(i) + ',' + str(j)] = k
             k += 1
             j -= 1
     elif ele[0] == 'U' :
         for col in range(int(ele[1:])):
-            wire1_path[str(i) + ',' + str(j)] = 1
+            wire1_path[str(i) + ',' + str(j)] = k
             k += 1
             i += 1
     elif ele[0] == 'D' :
         for col in range(int(ele[1:])):
-            wire1_path[str(i) + ',' + str(j)] = 1
+            wire1_path[str(i) + ',' + str(j)] = k
             k += 1
             i -= 1
 
@@ -39,8 +39,8 @@ for ele in wire2 :
     if ele[0] == 'R' :
         for col in range(int(ele[1:])):
             try:
-                if wire1_path[str(i) + ',' + str(j)] == 1 :
-                    intersections.append({'i': i, 'j': j})
+                length = wire1_path[str(i) + ',' + str(j)]
+                intersections.append({'i': i, 'j': j, 'totalLen': k + length})
             except:
                 i = i
                 #useless statement we don't care about
@@ -49,8 +49,8 @@ for ele in wire2 :
     elif ele[0] == 'L' :
         for col in range(int(ele[1:])):
             try:
-                if wire1_path[str(i) + ',' + str(j)] == 1:
-                    intersections.append({'i': i, 'j': j})
+                length = wire1_path[str(i) + ',' + str(j)]
+                intersections.append({'i': i, 'j': j, 'totalLen': k + length})
             except:
                 i = i
                 # useless statement we don't care about
@@ -59,8 +59,8 @@ for ele in wire2 :
     elif ele[0] == 'U' :
         for col in range(int(ele[1:])):
             try:
-                if wire1_path[str(i) + ',' + str(j)] == 1:
-                    intersections.append({'i': i, 'j': j})
+                length = wire1_path[str(i) + ',' + str(j)]
+                intersections.append({'i': i, 'j': j, 'totalLen': k + length})
             except:
                 i = i
                 # useless statement we don't care about
@@ -69,20 +69,20 @@ for ele in wire2 :
     elif ele[0] == 'D' :
         for col in range(int(ele[1:])):
             try:
-                if wire1_path[str(i) + ',' + str(j)] == 1:
-                    intersections.append({'i': i, 'j': j})
+                length = wire1_path[str(i) + ',' + str(j)]
+                intersections.append({'i': i, 'j': j, 'totalLen': k + length})
             except:
                 i = i
                 # useless statement we don't care about
             k += 1
             i -= 1
 
-minEle = {'i': sys.maxsize, 'j': sys.maxsize, 'manDist': sys.maxsize}
+minEle = {'i': 0, 'j': 0, 'totalLen': sys.maxsize}
 for ele in intersections :
     if ele['i'] == 0 and ele['j'] == 0:
         continue
-    print(abs(ele['i']) + abs(ele['j']))
-    if (abs(ele['i']) + abs(ele['j'])) < (abs(minEle['i']) + abs(minEle['j'])):
-        minEle = {'i': ele['i'], 'j': ele['j'], 'manDist': abs(ele['i']) + abs(ele['j'])}
+    print(str(abs(ele['i']) + abs(ele['j'])) + ': ' + str(ele['totalLen']))
+    if ele['totalLen'] < minEle['totalLen']:
+        minEle = ele
 
-print("MINIMUM INTERSECTION IS: " + str(minEle))
+print("THE MINIMUM PATH LENGTH IS: " + str(minEle))
