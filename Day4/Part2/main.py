@@ -13,7 +13,6 @@ for x in range(startIDX, endIDX):
     instances[int(str(x)[0])] += 1
     allIncrease = True
     for y in range(1, len(str(x))):
-        print(int(str(x)[y]))
         instances[int(str(x)[y])] += 1
         if int(str(x)[y]) < int(str(x)[y-1]):
             allIncrease = False
